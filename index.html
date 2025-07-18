@@ -19,14 +19,12 @@ const gltf = await loadGLTF(fn);
 const model = gltf.scene;
 
 const z = -0.5;
+const w = .8;
 const cnt = 5;
 const models = [];
 for (let i = 0; i < cnt; i++) {
-  //const m = model.clone(true); // NG
   const m = SkeletonUtils.clone(model);
   scene.add(m);
-  const w = .8;
-  //const x = w / (cnt - 1) * i - w / 2;
   const x = i * i * .08 - .5;
   m.position.set(x, 0, z);
   const scale = 1 << i;
@@ -37,14 +35,10 @@ for (let i = 0; i < cnt; i++) {
 }
 
 const clock = new THREE.Clock();
-
 renderer.setAnimationLoop(() => {
   const delta = clock.getDelta();
-  models.forEach((m, idx) => {
-    if (m.mixer) m.mixer.update(delta);
-  });
+  models.forEach((m, idx) => m.mixer?.update(delta));
 	renderer.render(scene, camera);
 });
 </script>
-
 </body></html>
