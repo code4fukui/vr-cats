@@ -9,68 +9,28 @@
 }
 </script>
 <script type="module">
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
+import { loadGLTF } from "./loadGLTF.js";
 
 const fn = "Q12296-1-2_animation_2.glb";
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xeeeeee);
+const gltf = await loadGLTF(fn);
+const model = gltf.scene;
+scene.add(model);
+model.position.set(0, 0, -0.1);
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 1.5, 3);
-
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(1, 2, 3);
-scene.add(light);
-
-const loader = new GLTFLoader();
-
-let mixer;
-loader.load(fn, (gltf) => {
-  const model = gltf.scene;
-  scene.add(model);
-  const scale = 100;
-  model.scale.set(scale, scale, scale)
-
-  mixer = new THREE.AnimationMixer(model);
-  gltf.animations.forEach((clip) => {
-    mixer.clipAction(clip).play();
-  });
+const mixer = new THREE.AnimationMixer(model);
+gltf.animations.forEach((clip) => {
+  mixer.clipAction(clip).play();
 });
 
 const clock = new THREE.Clock();
 
-function animate() {
-  requestAnimationFrame(animate);
-
+renderer.setAnimationLoop(() => {
   const delta = clock.getDelta();
   if (mixer) mixer.update(delta);
-
-  controls.update();
-  renderer.render(scene, camera);
-}
-
-animate();
-
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.render(scene, camera);
 });
 </script>
 
-<style>
-body {
-  padding: 0;
-  margin: 0;
-}
-</style>
+</body></html>
