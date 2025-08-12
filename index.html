@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
-<title>xr-medaka</title></head><body>
+<title>xr-beetle</title></head><body>
 <script type="importmap">
 {
   "imports": {
@@ -14,25 +14,36 @@ import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egx
 import { loadGLTF } from "./loadGLTF.js";
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 
-const fn = "Q12296-1-2_animation_2.glb";
-const gltf = await loadGLTF(fn);
-const model = gltf.scene;
+const fns = [
+  "QS1469-W02-1-1_animation.glb",
+  "MRKT067-W02-1-1_3_Scaled_animation.glb",
+];
 
-const z = -0.5;
-const w = .8;
-const cnt = 5;
 const models = [];
-for (let i = 0; i < cnt; i++) {
-  const m = SkeletonUtils.clone(model);
-  scene.add(m);
-  const x = i * i * .08 - .5;
-  m.position.set(x, 0, z);
-  const scale = 1 << i;
-  m.scale.set(scale, scale, scale);
-  m.mixer = new THREE.AnimationMixer(m);
-  gltf.animations.forEach(clip => m.mixer.clipAction(clip).startAt(i * 0.05).play());
-  models.push(m);
-}
+
+const loadAnimatedGLTF = async (fn, x, cnt, scale) => {
+  const gltf = await loadGLTF(fn);
+  const model = gltf.scene;
+  const z = -.2;
+  const w = .8;
+  for (let i = 0; i < cnt; i++) {
+    const m = SkeletonUtils.clone(model);
+    scene.add(m);
+    //const x = i * i * .08;// - .5;
+    const y = i * .2 - .1;
+    m.position.set(x, y, z);
+    //const scale = 0.1; //  << i;
+    const scale2 = scale * (i * 2 + 1);
+    m.scale.set(scale2, scale2, scale2);
+    m.mixer = new THREE.AnimationMixer(m);
+    gltf.animations.forEach(clip => m.mixer.clipAction(clip).startAt(i * 0.05).play());
+    models.push(m);
+  }
+};
+
+const w = .1;
+await loadAnimatedGLTF(fns[0], -w, 2, 0.01);
+await loadAnimatedGLTF(fns[1], w, 2, 1);
 
 const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
