@@ -13,6 +13,9 @@
 import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
 import { loadGLTF } from "./loadGLTF.js";
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+import { PCControl } from "./PCControl.js";
+
+const pcctrl = new PCControl(camera, renderer.domElement);
 
 const fns = [
   "QS1469-W02-1-1_animation.glb",
@@ -49,6 +52,7 @@ const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
   const delta = clock.getDelta();
   models.forEach((m, idx) => m.mixer?.update(delta));
+  pcctrl.update(delta);
 	renderer.render(scene, camera);
 });
 </script>
