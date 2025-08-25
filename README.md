@@ -1,9 +1,9 @@
 # vr-beetle
 
 - show a gltf model with an animation for WebXR
-- [demo xr-beetle](https://code4fukui.github.io/vr-beetle/)
+- [demo xr-cats](https://code4fukui.github.io/vr-cats/)
 
 ## data
 
-- [CC0 カブトムシ ♂ 赤 Japanese Rhinoceros Beetle, Red - Download Free 3D model by ffish.asia / floraZia.com (@ffishAsia-and-floraZia) [5ab766d]](https://sketchfab.com/3d-models/cc0-japanese-rhinoceros-beetle-red-5ab766d125cd4e4d943e8907a262a3a7#download)
-- [CC0 カブトムシ幼虫 Japanese Rhinoceros Beetle, Larvae - Download Free 3D model by ffish.asia / floraZia.com (@ffishAsia-and-floraZia) [53e2710]](https://sketchfab.com/3d-models/cc0-japanese-rhinoceros-beetle-larvae-53e2710bc9bd4c369549c4d9318d5178#download)
+- DATA: <a href=https://sketchfab.com/3d-models/bicolor-cat-e623a618ca344a8393d7ba4d63ec23cf>Bicolor Cat - Download Free 3D model by kenchoo (@kenchoo) [e623a61]</a> (<a href=https://creativecommons.org/licenses/by/4.0/>CC BY</a> by <a href=https://sketchfab.com/kenchoo>kenchoo</a>)<br>
+- DATA: <a href=https://sketchfab.com/3d-models/lion-61d687ca92dc4cafbd5e74e3be40d49d>Lion - Download Free 3D model by kenchoo (@kenchoo) [61d687c]</a> (<a href=https://creativecommons.org/licenses/by-nc-sa/4.0/>CC BY-NC-SA</a> by <a href=https://sketchfab.com/kenchoo>kenchoo</a>)<br>
