@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
-<title>xr-beetle</title></head><body>
+<title>xr-cats</title></head><body>
 <script type="importmap">
 {
   "imports": {
@@ -9,6 +9,24 @@
   }
 }
 </script>
+<main><h1>xr-cats</h1>
+DATA: <a href=https://sketchfab.com/3d-models/bicolor-cat-e623a618ca344a8393d7ba4d63ec23cf>Bicolor Cat - Download Free 3D model by kenchoo (@kenchoo) [e623a61]</a> (<a href=https://creativecommons.org/licenses/by/4.0/>CC BY</a> by <a href=https://sketchfab.com/kenchoo>kenchoo</a>)<br>
+DATA: <a href=https://sketchfab.com/3d-models/lion-61d687ca92dc4cafbd5e74e3be40d49d>Lion - Download Free 3D model by kenchoo (@kenchoo) [61d687c]</a> (<a href=https://creativecommons.org/licenses/by-nc-sa/4.0/>CC BY-NC-SA</a> by <a href=https://sketchfab.com/kenchoo>kenchoo</a>)<br>
+</main>
+<style>
+main {
+  position: fixed;
+  top: 2em;
+  left: 2em;
+  background-color: rgba(0, 0, 0, .3);
+  padding: 1em;
+  color: white;
+}
+a {
+  color: white !important;
+}
+</style>
+
 <script type="module">
 import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
 import { loadGLTF } from "https://code4fukui.github.io/vr-beetle/loadGLTF.js";
@@ -17,36 +35,42 @@ import { PCControl } from "https://code4fukui.github.io/vr-beetle/PCControl.js";
 
 const pcctrl = new PCControl(camera, renderer.domElement);
 
-const fns = [
-  "QS1469-W02-1-1_animation.glb",
-  "MRKT067-W02-1-1_3_Scaled_animation.glb",
-];
+const cloneAnimatedGLTF = (gltf) => {
+  const model = gltf.scene;
+  const m = SkeletonUtils.clone(model);
+  m.mixer = new THREE.AnimationMixer(m);
+  gltf.animations.forEach(clip => m.mixer.clipAction(clip).startAt(0).play());
+  return m;
+};
 
 const models = [];
 
-const loadAnimatedGLTF = async (fn, x, cnt, scale) => {
-  const gltf = await loadGLTF(fn);
-  const model = gltf.scene;
-  const z = -.2;
-  const w = .8;
-  for (let i = 0; i < cnt; i++) {
-    const m = SkeletonUtils.clone(model);
-    scene.add(m);
-    //const x = i * i * .08;// - .5;
-    const y = i * .2 - .1;
-    m.position.set(x, y, z);
-    //const scale = 0.1; //  << i;
-    const scale2 = scale * (i * 2 + 1);
-    m.scale.set(scale2, scale2, scale2);
-    m.mixer = new THREE.AnimationMixer(m);
-    gltf.animations.forEach(clip => m.mixer.clipAction(clip).startAt(i * 0.05).play());
-    models.push(m);
-  }
-};
+const y = -1.6;
 
-const w = .1;
-await loadAnimatedGLTF(fns[0], -w, 2, 0.01);
-await loadAnimatedGLTF(fns[1], w, 2, 1);
+const gltf1 = await loadGLTF("bicolor_cat.glb");
+const m1 = cloneAnimatedGLTF(gltf1);
+m1.position.set(0, y, -.8);
+//m1.scale.set(.2, .2, .2);
+models.push(m1);
+scene.add(m1);
+
+const gltf2 = await loadGLTF("lion.glb");
+const m2 = cloneAnimatedGLTF(gltf2);
+m2.position.set(0, y, 2);
+m2.scale.set(.05, .05, .05);
+m2.rotation.y = Math.PI - Math.PI / 2;
+models.push(m2);
+scene.add(m2);
+
+/*
+const gltf2 = await loadGLTF("lioness.glb");
+const m2 = cloneAnimatedGLTF(gltf2);
+m2.position.set(0, y, 2);
+m2.scale.set(1, 1, 1);
+m2.rotation.y = Math.PI;
+models.push(m2);
+scene.add(m2);
+*/
 
 const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
