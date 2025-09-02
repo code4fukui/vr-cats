@@ -28,13 +28,20 @@ a {
 </style>
 
 <script type="module">
-import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
+import { THREE, scene, camera, renderer, ambientLight, directionalLight } from "https://code4fukui.github.io/egxr.js/egxr.js";
 import { loadGLTF } from "https://code4fukui.github.io/vr-beetle/loadGLTF.js";
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 import { PCControl } from "https://code4fukui.github.io/vr-beetle/PCControl.js";
 
+// control
 const pcctrl = new PCControl(camera, renderer.domElement);
 
+// light
+ambientLight.intensity = 2.0; // 環境光（全体を均一に明るくする）
+directionalLight.intensity = 7.0; // 平行光
+directionalLight.position.set(2, 10, 1); // 上から光
+
+// model
 const cloneAnimatedGLTF = (gltf) => {
   const model = gltf.scene;
   const m = SkeletonUtils.clone(model);
@@ -56,8 +63,9 @@ scene.add(m1);
 
 const gltf2 = await loadGLTF("lion.glb");
 const m2 = cloneAnimatedGLTF(gltf2);
-m2.position.set(0, y, 2);
-m2.scale.set(.05, .05, .05);
+m2.position.set(0, y, 1.8);
+const scale2 = 0.045;
+m2.scale.set(scale2, scale2, scale2);
 m2.rotation.y = Math.PI - Math.PI / 2;
 models.push(m2);
 scene.add(m2);
