@@ -1,4 +1,4 @@
-# vr-beetle
+# vr-cats
 
 - show a gltf model with an animation for WebXR
 - [demo xr-cats](https://code4fukui.github.io/vr-cats/)
