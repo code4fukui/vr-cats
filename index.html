@@ -61,12 +61,29 @@ m1.position.set(0, y, -.8);
 models.push(m1);
 scene.add(m1);
 
-const gltf2 = await loadGLTF("lion.glb");
-const m2 = cloneAnimatedGLTF(gltf2);
-m2.position.set(0, y, 1.8);
-const scale2 = 0.045;
-m2.scale.set(scale2, scale2, scale2);
-m2.rotation.y = Math.PI - Math.PI / 2;
+const getModel2 = async () => {
+  if (location.hash == "#bear") {
+    const fn2 = "strong_bear.glb";
+    const gltf2 = await loadGLTF(fn2);
+    const m2 = cloneAnimatedGLTF(gltf2);
+    const scale2 = 0.95;
+    m2.scale.set(scale2, scale2, scale2);
+    m2.position.set(0, -3.5, -12.5);
+    m2.rotation.y = Math.PI;
+    return m2;
+  } else {
+    const fn2 = "lion.glb";
+    const gltf2 = await loadGLTF(fn2);
+    const m2 = cloneAnimatedGLTF(gltf2);
+    m2.position.set(0, y, 1.8);
+    const scale2 = 0.045;
+    m2.scale.set(scale2, scale2, scale2);
+    m2.rotation.y = Math.PI - Math.PI / 2;
+    return m2;
+  }
+};
+
+const m2 = await getModel2();
 models.push(m2);
 scene.add(m2);
 

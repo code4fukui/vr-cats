@@ -2,6 +2,7 @@
 
 - show a gltf model with an animation for WebXR
 - [demo xr-cats](https://code4fukui.github.io/vr-cats/)
+- [demo xr-cat and bear](https://code4fukui.github.io/vr-cats/#bear)
 
 ## data
 
